@@ -577,21 +577,6 @@
                     <input type="range" id="gainSlider" min="-40" max="40" value="6" step="0.1" style="margin-top: 0.5rem; width: 100%;">
                 </div>
 
-                <h3 class="section-title" style="margin-top: 0.5rem;">Coefficients (Direct Form I)</h3>
-
-                <div class="coeff-grid" id="coeffGrid">
-                    <div class="coeff-item"><span class="coeff-name">b0</span><span class="coeff-value" id="coeff_b0">0</span></div>
-                    <div class="coeff-item"><span class="coeff-name">b1</span><span class="coeff-value" id="coeff_b1">0</span></div>
-                    <div class="coeff-item"><span class="coeff-name">b2</span><span class="coeff-value" id="coeff_b2">0</span></div>
-                    <div class="coeff-item"><span class="coeff-name">a1</span><span class="coeff-value" id="coeff_a1">0</span></div>
-                    <div class="coeff-item"><span class="coeff-name">a2</span><span class="coeff-value" id="coeff_a2">0</span></div>
-                </div>
-
-                <div class="tf-section">
-                    <h3 class="section-title" style="margin-bottom: 0.5rem;">Transfer Function H(z)</h3>
-                    <div class="tf-display" id="tfDisplay"></div>
-                </div>
-
                 <div class="tf-section">
                     <h3 class="section-title" style="margin-bottom: 0.5rem;">Design from H(s)</h3>
                     <div class="tf-input-group">
@@ -606,6 +591,21 @@
                     </div>
                     <button class="tf-apply-btn" onclick="applyAnalogPrototype()">Bilinear Transform → H(z)</button>
                     <div id="tfInputResult" class="tf-result-text" style="display: none;"></div>
+                </div>
+
+                <h3 class="section-title" style="margin-top: 0.5rem;">Coefficients (Direct Form I)</h3>
+
+                <div class="coeff-grid" id="coeffGrid">
+                    <div class="coeff-item"><span class="coeff-name">b0</span><span class="coeff-value" id="coeff_b0">0</span></div>
+                    <div class="coeff-item"><span class="coeff-name">b1</span><span class="coeff-value" id="coeff_b1">0</span></div>
+                    <div class="coeff-item"><span class="coeff-name">b2</span><span class="coeff-value" id="coeff_b2">0</span></div>
+                    <div class="coeff-item"><span class="coeff-name">a1</span><span class="coeff-value" id="coeff_a1">0</span></div>
+                    <div class="coeff-item"><span class="coeff-name">a2</span><span class="coeff-value" id="coeff_a2">0</span></div>
+                </div>
+
+                <div class="tf-section">
+                    <h3 class="section-title" style="margin-bottom: 0.5rem;">Transfer Function H(z)</h3>
+                    <div class="tf-display" id="tfDisplay"></div>
                 </div>
             </div>
 

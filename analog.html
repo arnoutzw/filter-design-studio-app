@@ -102,6 +102,7 @@
 
         .main-content {
             display: flex;
+            flex-direction: column;
             flex: 1;
             gap: 1rem;
             padding: 1rem;
@@ -114,6 +115,22 @@
             border-radius: 0.5rem;
             padding: 1rem;
             overflow-y: auto;
+        }
+
+        .top-panel {
+            flex: 0 0 auto;
+            display: flex;
+            flex-direction: column;
+            min-height: 220px;
+            max-height: 40vh;
+        }
+
+        .bottom-content {
+            display: flex;
+            flex: 1;
+            gap: 1rem;
+            overflow: hidden;
+            min-height: 0;
         }
 
         .left-panel {
@@ -238,9 +255,6 @@
         }
 
         .plot-section {
-            margin-top: 1rem;
-            padding-top: 1rem;
-            border-top: 1px solid #3f3f46;
             flex: 1;
             display: flex;
             flex-direction: column;
@@ -286,21 +300,22 @@
             border: 1px solid #3f3f46;
             border-radius: 0.375rem;
             display: block;
-            min-height: 200px;
+            min-height: 150px;
         }
 
         .circuit-diagram {
             background: #27272a;
             border: 1px solid #3f3f46;
             border-radius: 0.5rem;
-            padding: 1rem;
-            margin-bottom: 1rem;
+            padding: 0.5rem;
+            margin-bottom: 0.75rem;
             text-align: center;
         }
 
-        svg {
+        .circuit-diagram svg {
             max-width: 100%;
             height: auto;
+            max-height: 90px;
         }
 
         .section-title {
@@ -313,8 +328,12 @@
 
         @media (max-width: 1200px) {
             .main-content {
-                flex-direction: column;
                 overflow-y: auto;
+            }
+
+            .bottom-content {
+                flex-direction: column;
+                overflow: visible;
             }
 
             .left-panel {
@@ -323,7 +342,7 @@
 
             .right-panel {
                 flex: 0 0 auto;
-                min-height: 500px;
+                min-height: 300px;
             }
 
             .results-grid {
@@ -544,124 +563,8 @@
         </div>
 
         <div class="main-content">
-            <div class="left-panel section">
-                <h3 class="section-title" id="leftPanelTitle">Circuit Parameters</h3>
-
-                <!-- H(s) Transfer Function Input (hidden by default) -->
-                <div id="tfInputPanel" style="display: none;">
-                    <div class="tf-input-group">
-                        <label>Numerator coefficients</label>
-                        <input type="text" id="tfNumInput" placeholder="e.g. 1e6" value="1e6">
-                        <div class="tf-hint">Highest power first: a₂s² + a₁s + a₀</div>
-                    </div>
-                    <div class="tf-input-group">
-                        <label>Denominator coefficients</label>
-                        <input type="text" id="tfDenInput" placeholder="e.g. 1 1000 1e6" value="1 1000 1e6">
-                        <div class="tf-hint">Highest power first: b₂s² + b₁s + b₀</div>
-                    </div>
-                    <button class="tf-apply-btn" onclick="applyTransferFunction()">Apply H(s)</button>
-                    <div id="tfInputResult" class="tf-result-text" style="display: none;"></div>
-                </div>
-
-                <!-- Filter Type Selector -->
-                <div id="filterTypeGroup" class="input-group" style="display: none;">
-                    <label for="filterType">Filter Type</label>
-                    <select id="filterType">
-                        <option value="lp-rc">Low-Pass RC</option>
-                        <option value="lp-rl">Low-Pass RL</option>
-                        <option value="lp-rlc">Low-Pass RLC</option>
-                        <option value="hp-rc">High-Pass RC</option>
-                        <option value="hp-rl">High-Pass RL</option>
-                        <option value="hp-rlc">High-Pass RLC</option>
-                        <option value="bp-rlc">Band-Pass RLC</option>
-                        <option value="bs-rlc">Band-Stop RLC</option>
-                    </select>
-                </div>
-
-                <!-- Resistance Input -->
-                <div class="input-group">
-                    <label for="resistance">Resistance (R)</label>
-                    <div class="input-wrapper">
-                        <input type="number" id="resistance" min="0.1" max="1000000" value="1000" step="any">
-                        <select id="resistanceUnit">
-                            <option value="1">Ω</option>
-                            <option value="1000">kΩ</option>
-                            <option value="1000000">MΩ</option>
-                        </select>
-                    </div>
-                    <input type="range" id="resistanceSlider" min="0" max="1" value="0.5" step="0.001" style="margin-top: 0.5rem;">
-                </div>
-
-                <!-- Inductance Input -->
-                <div class="input-group">
-                    <label for="inductance">Inductance (L)</label>
-                    <div class="input-wrapper">
-                        <input type="number" id="inductance" min="0.000001" max="100" value="0.001" step="any">
-                        <select id="inductanceUnit">
-                            <option value="1">H</option>
-                            <option value="0.001">mH</option>
-                            <option value="0.000001">µH</option>
-                            <option value="0.000000001">nH</option>
-                        </select>
-                    </div>
-                    <input type="range" id="inductanceSlider" min="0" max="1" value="0.5" step="0.001" style="margin-top: 0.5rem;">
-                </div>
-
-                <!-- Capacitance Input -->
-                <div class="input-group">
-                    <label for="capacitance">Capacitance (C)</label>
-                    <div class="input-wrapper">
-                        <input type="number" id="capacitance" min="0.000000000001" max="0.1" value="0.000001" step="any">
-                        <select id="capacitanceUnit">
-                            <option value="1">F</option>
-                            <option value="0.000001">µF</option>
-                            <option value="0.000000001">nF</option>
-                            <option value="0.000000000001">pF</option>
-                        </select>
-                    </div>
-                    <input type="range" id="capacitanceSlider" min="0" max="1" value="0.5" step="0.001" style="margin-top: 0.5rem;">
-                </div>
-
-                <!-- Input Voltage -->
-                <div class="input-group">
-                    <label for="voltage">Input Voltage (Vin)</label>
-                    <div class="input-wrapper">
-                        <input type="number" id="voltage" min="0.001" max="1000" value="5" step="any">
-                        <span style="color: #d4d4d8; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem;">V</span>
-                    </div>
-                </div>
-
-                <!-- Frequency Input -->
-                <div class="input-group">
-                    <label for="frequency">Frequency (f)</label>
-                    <div class="input-wrapper">
-                        <input type="number" id="frequency" min="0.1" max="1000000000" value="1000" step="any">
-                        <select id="frequencyUnit">
-                            <option value="1">Hz</option>
-                            <option value="1000">kHz</option>
-                            <option value="1000000">MHz</option>
-                        </select>
-                    </div>
-                    <input type="range" id="frequencySlider" min="0" max="1" value="0.5" step="0.001" style="margin-top: 0.5rem;">
-                </div>
-            </div>
-
-            <div class="right-panel section">
-                <div id="circuitDiagram" class="circuit-diagram">
-                    <svg id="circuitSVG" viewBox="0 0 400 200" width="400" height="150"></svg>
-                </div>
-
-                <h3 class="section-title">Analysis Results</h3>
-
-                <div class="results-grid" id="resultsGrid">
-                    <!-- Results populated by JavaScript -->
-                </div>
-
-                <div class="tf-section">
-                    <h3 class="section-title">Transfer Function H(s)</h3>
-                    <div class="tf-display" id="tfDisplay"></div>
-                </div>
-
+            <!-- Frequency Response on top (full width) -->
+            <div class="top-panel section">
                 <div class="plot-section">
                     <h3 class="section-title">Frequency Response</h3>
                     <div class="plot-tabs">
@@ -671,6 +574,129 @@
                         <button class="plot-tab" data-plot="impulse">Impulse Response</button>
                     </div>
                     <canvas id="plotCanvas"></canvas>
+                </div>
+            </div>
+
+            <!-- Bottom row: Circuit Parameters + SVG | Analysis Results -->
+            <div class="bottom-content">
+                <div class="left-panel section">
+                    <h3 class="section-title" id="leftPanelTitle">Circuit Parameters</h3>
+
+                    <!-- Circuit Diagram (shrunk, in left panel) -->
+                    <div id="circuitDiagram" class="circuit-diagram">
+                        <svg id="circuitSVG" viewBox="0 0 400 200" width="280" height="100"></svg>
+                    </div>
+
+                    <!-- H(s) Transfer Function Input (hidden by default) -->
+                    <div id="tfInputPanel" style="display: none;">
+                        <div class="tf-input-group">
+                            <label>Numerator coefficients</label>
+                            <input type="text" id="tfNumInput" placeholder="e.g. 1e6" value="1e6">
+                            <div class="tf-hint">Highest power first: a₂s² + a₁s + a₀</div>
+                        </div>
+                        <div class="tf-input-group">
+                            <label>Denominator coefficients</label>
+                            <input type="text" id="tfDenInput" placeholder="e.g. 1 1000 1e6" value="1 1000 1e6">
+                            <div class="tf-hint">Highest power first: b₂s² + b₁s + b₀</div>
+                        </div>
+                        <button class="tf-apply-btn" onclick="applyTransferFunction()">Apply H(s)</button>
+                        <div id="tfInputResult" class="tf-result-text" style="display: none;"></div>
+                    </div>
+
+                    <!-- Filter Type Selector -->
+                    <div id="filterTypeGroup" class="input-group" style="display: none;">
+                        <label for="filterType">Filter Type</label>
+                        <select id="filterType">
+                            <option value="lp-rc">Low-Pass RC</option>
+                            <option value="lp-rl">Low-Pass RL</option>
+                            <option value="lp-rlc">Low-Pass RLC</option>
+                            <option value="hp-rc">High-Pass RC</option>
+                            <option value="hp-rl">High-Pass RL</option>
+                            <option value="hp-rlc">High-Pass RLC</option>
+                            <option value="bp-rlc">Band-Pass RLC</option>
+                            <option value="bs-rlc">Band-Stop RLC</option>
+                        </select>
+                    </div>
+
+                    <!-- Resistance Input -->
+                    <div class="input-group">
+                        <label for="resistance">Resistance (R)</label>
+                        <div class="input-wrapper">
+                            <input type="number" id="resistance" min="0.1" max="1000000" value="1000" step="any">
+                            <select id="resistanceUnit">
+                                <option value="1">Ω</option>
+                                <option value="1000">kΩ</option>
+                                <option value="1000000">MΩ</option>
+                            </select>
+                        </div>
+                        <input type="range" id="resistanceSlider" min="0" max="1" value="0.5" step="0.001" style="margin-top: 0.5rem;">
+                    </div>
+
+                    <!-- Inductance Input -->
+                    <div class="input-group">
+                        <label for="inductance">Inductance (L)</label>
+                        <div class="input-wrapper">
+                            <input type="number" id="inductance" min="0.000001" max="100" value="0.001" step="any">
+                            <select id="inductanceUnit">
+                                <option value="1">H</option>
+                                <option value="0.001">mH</option>
+                                <option value="0.000001">µH</option>
+                                <option value="0.000000001">nH</option>
+                            </select>
+                        </div>
+                        <input type="range" id="inductanceSlider" min="0" max="1" value="0.5" step="0.001" style="margin-top: 0.5rem;">
+                    </div>
+
+                    <!-- Capacitance Input -->
+                    <div class="input-group">
+                        <label for="capacitance">Capacitance (C)</label>
+                        <div class="input-wrapper">
+                            <input type="number" id="capacitance" min="0.000000000001" max="0.1" value="0.000001" step="any">
+                            <select id="capacitanceUnit">
+                                <option value="1">F</option>
+                                <option value="0.000001">µF</option>
+                                <option value="0.000000001">nF</option>
+                                <option value="0.000000000001">pF</option>
+                            </select>
+                        </div>
+                        <input type="range" id="capacitanceSlider" min="0" max="1" value="0.5" step="0.001" style="margin-top: 0.5rem;">
+                    </div>
+
+                    <!-- Input Voltage -->
+                    <div class="input-group">
+                        <label for="voltage">Input Voltage (Vin)</label>
+                        <div class="input-wrapper">
+                            <input type="number" id="voltage" min="0.001" max="1000" value="5" step="any">
+                            <span style="color: #d4d4d8; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem;">V</span>
+                        </div>
+                    </div>
+
+                    <!-- Frequency Input -->
+                    <div class="input-group">
+                        <label for="frequency">Frequency (f)</label>
+                        <div class="input-wrapper">
+                            <input type="number" id="frequency" min="0.1" max="1000000000" value="1000" step="any">
+                            <select id="frequencyUnit">
+                                <option value="1">Hz</option>
+                                <option value="1000">kHz</option>
+                                <option value="1000000">MHz</option>
+                            </select>
+                        </div>
+                        <input type="range" id="frequencySlider" min="0" max="1" value="0.5" step="0.001" style="margin-top: 0.5rem;">
+                    </div>
+                </div>
+
+                <div class="right-panel section">
+                    <h3 class="section-title">Analysis Results</h3>
+
+                    <div class="results-grid" id="resultsGrid">
+                        <!-- Results populated by JavaScript -->
+                    </div>
+
+                    <div class="tf-section">
+                        <h3 class="section-title">Transfer Function H(s)</h3>
+                        <div class="tf-display" id="tfDisplay"></div>
+                    </div>
                 </div>
             </div>
         </div>
