@@ -1,0 +1,24 @@
+{
+  "name": "Filter Design Studio",
+  "short_name": "Filter Studio",
+  "description": "Interactive digital and analog filter design tools with real-time frequency response analysis",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#09090b",
+  "theme_color": "#09090b",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='192' height='192' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' rx='32' fill='%2309090b'/%3E%3Crect x='4' y='4' width='184' height='184' rx='28' fill='none' stroke='%23f59e0b' stroke-width='3'/%3E%3Cpath d='M24 120 Q48 50 72 96 T120 80 T168 88' stroke='%23f59e0b' stroke-width='5' fill='none' stroke-linecap='round'/%3E%3Cpath d='M24 145 Q56 155 88 135 T152 145' stroke='%23fbbf24' stroke-width='2.5' fill='none' stroke-linecap='round' opacity='0.6'/%3E%3C/svg%3E",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='512' height='512' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='80' fill='%2309090b'/%3E%3Crect x='8' y='8' width='496' height='496' rx='72' fill='none' stroke='%23f59e0b' stroke-width='6'/%3E%3Cpath d='M64 320 Q128 130 192 256 T320 210 T448 230' stroke='%23f59e0b' stroke-width='10' fill='none' stroke-linecap='round'/%3E%3Cpath d='M64 380 Q150 400 236 350 T408 380' stroke='%23fbbf24' stroke-width='5' fill='none' stroke-linecap='round' opacity='0.6'/%3E%3C/svg%3E",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
